@@ -9,17 +9,30 @@
 
 var bcrypt = require('bcrypt');
 
+/**
+ * Encrypts the password before persisting.
+ */
+function hashPassword(user, done) {
+  bcrypt.genSalt(10, function (err, salt) {
+    bcrypt.hash(user.password, salt, function (err, hash) {
+      if (err) done(err);
+      user.password = hash;
+      done();
+    });
+  });
+}
+
 module.exports = {
 
   attributes: {
   	email: {
-      type: 'string',
       required: true,
+      type: 'string',
       unique: true
     },
     password: {
-      type: 'string',
-      required: true
+      required: true,
+      type: 'string'
     },
 
     /**
@@ -29,7 +42,7 @@ module.exports = {
     toJSON: function () {
       var plain = this.toObject();
       delete plain.password;
-      return obj;
+      return plain;
     }
   },
 
@@ -37,13 +50,12 @@ module.exports = {
    * Encrypt password before creating a new user.
    */
   beforeCreate: function (user, cb) {
-    bcrypt.genSalt(10, function (err, salt) {
-      bcrypt.hash(user.password, salt, function (err, hash) {
-        if (err) cb(err);
-        user.password = hash;
-        cb(null, user);
-      });
-    });
+    hashPassword(user, cb);
+  },
+
+  beforeUpdate: function (user, cb) {
+    if (!user.password) return cb();
+    hashPassword(user, cb);
   }
 
 };
