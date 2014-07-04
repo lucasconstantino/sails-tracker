@@ -28,21 +28,24 @@ passport.deserializeUser(function (id, done) {
 function localStrategy(email, password, done) {
   User.findOne({
     email: email
-  }).done(function (err, user) {
-    if (err) return done(err);
-    if (!user) return done(null, false, {
-      message: 'unkown user with e-mail "' + email + '"'
-    });
-
-    bcrypt.compare(password, user.password, function (err, res) {
-      if (err) return done(err);
-      if (!res) return done(null, false, {
-        message: 'wrong password for user "' + email + '"'
+  })
+    .then(function (user) {
+      if (!user) return done(null, false, {
+        message: 'unkown user with e-mail "' + email + '"'
       });
 
-      return done(null, user);
+      bcrypt.compare(password, user.password, function (err, res) {
+        if (err) return done(err);
+        if (!res) return done(null, false, {
+          message: 'wrong password for user "' + email + '"'
+        });
+
+        return done(null, user);
+      });
+    })
+    .fail(function (err) {
+      done(null, false, err);
     });
-  });
 }
 
 // Use the LocalStrategy within Passport.

@@ -27,8 +27,14 @@ module.exports = {
     /**
      * Handles any error during login attempt.
      */
-    function loginError() {
-      return res.send(401, 'authentication failed');
+    function loginError(info) {
+      var message = 'authentication failed';
+      if (info) {
+        message += ': ';
+        if (typeof info == 'string') message += info;
+        if (info.message) message += info.message;
+      }
+      return res.send(401, message);
     }
 
     if (!req.body.email) res.send(401, 'missing email');
@@ -37,7 +43,7 @@ module.exports = {
     // Attempt to login using local strategy.
     // @todo: this could be enhanced to allow other kinds of authentication.
     passport.authenticate('local', function (err, user, info) {
-      if (err || !user) return loginError();
+      if (err || !user) return loginError(info);
       req.login(user, function (err) {
         if (err) return loginError();
         return res.send(200, 'login successfully');
