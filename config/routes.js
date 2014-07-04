@@ -31,8 +31,11 @@ module.exports.routes = {
     view: 'homepage'
   },
 
-
   // Custom routes here...
+
+  // Authentication routes.
+  '/login': 'AuthController.login',
+  '/logout': 'AuthController.logout'
 
 
   // If a request to a URL doesn't match any of the custom routes above,
