@@ -1,0 +1,16 @@
+{
+  "name": "el-tracker",
+  "version": "0.0.0",
+  "authors": [
+    "Lucas Constantino <lucas@taller.net.br>"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
