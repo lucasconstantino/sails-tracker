@@ -45,7 +45,7 @@ module.exports = {
   /**
    * Perform logout.
    */
-  logout = function (req, res) {
+  logout: function (req, res) {
     req.logout();
     res.send(200, 'logout successfully')
   },
