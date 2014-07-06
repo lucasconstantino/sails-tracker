@@ -53,6 +53,9 @@ module.exports = {
     hashPassword(user, cb);
   },
 
+  /**
+   * Encrypt password before updating a new user.
+   */
   beforeUpdate: function (user, cb) {
     if (!user.password) return cb();
     hashPassword(user, cb);
