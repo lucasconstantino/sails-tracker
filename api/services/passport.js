@@ -6,8 +6,7 @@
 
 var passport      = require('passport'),
     LocalStrategy = require('passport-local').Strategy,
-    bcrypt        = require('bcrypt'),
-    sails         = require('sails');
+    bcrypt        = require('bcrypt');
 
 // Passport session setup.
 // To support persistent login sessions, Passport needs to be able to
