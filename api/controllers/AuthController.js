@@ -37,8 +37,8 @@ module.exports = {
       return res.send(401, message);
     }
 
-    if (!req.body.email) res.send(401, 'missing email');
-    if (!req.body.password) res.send(401, 'missing password');
+    if (!req.body.email) return res.send(401, 'missing email');
+    if (!req.body.password) return res.send(401, 'missing password');
 
     // Attempt to login using local strategy.
     // @todo: this could be enhanced to allow other kinds of authentication.
