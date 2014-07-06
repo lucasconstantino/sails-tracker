@@ -6,8 +6,7 @@
  *
  */
 
-var actionUtil = require('../../node_modules/sails/lib/hooks/blueprints/actionUtil'),
-    async      = require('async');
+var actionUtil = require('../../node_modules/sails/lib/hooks/blueprints/actionUtil');
 
 module.exports = function(req, res, next) {
 
