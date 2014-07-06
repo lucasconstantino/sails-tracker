@@ -1,5 +1,5 @@
 /**
- * authenticated
+ * isAuthenticated
  *
  * @module      :: Policy
  * @description :: Passport authentication police.
