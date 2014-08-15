@@ -40,7 +40,9 @@ module.exports = {
        * Add creator as member.
        */
       defaultsTo: function () {
-        return this.createdBy && [this.createdBy] || [];
+        var members = this.members || [];
+        members.push(this.createdBy);
+        return members;
       }
     },
 

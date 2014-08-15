@@ -27,15 +27,17 @@ module.exports = function(req, res, next) {
    */
   function filterOne() {
 
-    var query = Model.findOne(pk).exec(function found(err, record) {
-      if (err) return res.serverError(err);
+    Model
+      .findOne(pk)
+      .exec(function found(err, record) {
+        if (err) return res.serverError(err);
 
-      if (record && record.createdBy != user.id) {
-        return res.forbidden('action must be performed by the owner.');
-      }
-      
-      next();
-    });
+        if (record && record.createdBy != user.id) {
+          return res.forbidden('action must be performed by the owner.');
+        }
+        
+        next();
+      });
   }
 
   /**
@@ -52,8 +54,8 @@ module.exports = function(req, res, next) {
   }
 
   var Model = getModel(),
-      pk    = actionUtil.parsePk(req) || null,
-      user  = req.user || data.user;
+      pk    = actionUtil.parsePk(req) || req.param('parentid') || null,
+      user  = req.user;
 
   if (!Model) {
     sails.log.warn('Used "isOwner" policy against a non model controller.');

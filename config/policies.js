@@ -32,6 +32,9 @@ module.exports.policies = {
   },
 
   OrganizationController: {
-    '*': ['isAuthenticated', 'isOwner']
+    '*'       : true,
+    'create'  : ['isAuthenticated', 'addOwner'],
+    'find'    : ['isAuthenticated', 'isMember'],
+    'findOne' : ['isAuthenticated', 'isMember']
   }
 };
